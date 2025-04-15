@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <div class="row bg-blue justify-content-center">
-      <div class="col-md-6 text-start py-2 ">
+      <div class="col-md-6 text-start mt-2 pb-2 ">
           <img class="img-logo ps-3" src="@/assets/linkTic_logo.jpeg" alt="logo">
           <span class="title ms-3 ">Prueba Técnica LinkTic</span>
       </div>
-      <div class="col-md-6 d-flex align-items-center justify-content-end pe-4">
+      <div class="col-md-6 d-flex align-items-center justify-content-end pe-4 mt-2 pb-2">
           <span class="n-title me-2">Presentado por:</span>
           <span class="n-title-b">Leonardo Herrera M.</span>
       </div>
     </div>
-    <div class="container">
-       <dashboard />
+    <div class="row">
+       <dashboard ></dashboard>
     </div>
   </div>
 </template>

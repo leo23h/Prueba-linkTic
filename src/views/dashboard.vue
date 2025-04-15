@@ -45,44 +45,6 @@
       <div class="col-12 mt-5">
         <div class="card">
           <div class="card-body">
-            <!-- <table class="table table-hover table-responsive table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Company</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Leanne Graham</td>
-                  <td>Bret</td>
-                  <td>Sincere@april.bizo</td>
-                  <td>Romaguera-Crona</td>
-                  <th>Actions</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <td>Leanne Graham</td>
-                  <td>Bret</td>
-                  <td>Sincere@april.bizo</td>
-                  <td>Romaguera-Crona</td>
-                  <th>Actions</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <td>Leanne Graham</td>
-                  <td>Bret</td>
-                  <td>Sincere@april.bizo</td>
-                  <td>Romaguera-Crona</td>
-                  <th>Actions</th>
-                </tr>
-              </tbody>
-            </table> -->
             <v-data-table
               :headers="headers"
               :items="desserts"
