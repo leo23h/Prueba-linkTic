@@ -11,7 +11,7 @@ const routes = [
   { path: '/post/:id', name:'post', component: PostView },
   { path: '/album/:idUser/', name:'album', component: AlbumsView },
   { path: '/comments/:id', name:'comments', component: CommentsView },
-  { path: '/photo/:id', name:'photo', component: PhotoView }
+  { path: '/photo/:idAlbum', name:'photo', component: PhotoView }
 ];
 
 Vue.use(VueRouter);

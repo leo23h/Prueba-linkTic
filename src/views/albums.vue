@@ -11,7 +11,7 @@
     </div>
     <div class="row mt-5">
       <div class="col-3" v-for="item in albums" :key="item.id">
-        <a href="javascript:void(0);" class="lnk-rel">
+        <a href="javascript:void(0);" class="lnk-rel" @click="viewPhotos(item.id)">
           <div class="card" style="width: 18rem">
             <div class="d-flex box-img align-items-center">
               <div class="col-12">
@@ -73,6 +73,11 @@ export default {
             "Hubo un problema para obtener albums" + error.message
           );
         });
+    },
+
+    viewPhotos(idAlbum){
+        console.log("user id dashboard", idAlbum)
+        this.$router.push({ name: 'photo', params: {idAlbum: idAlbum} });
     },
   },
   mounted() {

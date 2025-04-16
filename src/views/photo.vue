@@ -6,14 +6,14 @@
       </div>
       <div class="col-md-6 d-flex pe-4 pb-2">
         <span class="subtitle me-2">Album: </span>
-        <span class="subtitle-b">quidem molestiae enim</span>
+        <span class="subtitle-b">{{ album.title }}</span>
       </div>
     </div>
     <div class="row mt-5">
-      <div class="col-3 mb-3">
+      <div class="col-3 mb-3" v-for="item in photos" :key="item.id">
         <a
-          class=" lnk-rel"
-          href="https://via.placeholder.com/600/92c952"
+          class="lnk-rel"
+          :href="item.url"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -25,96 +25,13 @@
             </div>
             <div class="card-body" style="height: 80px">
               <p class="card-text">
-                accusamus beatae ad facilis cum similique qui sunt
+                {{ item.title }}
               </p>
             </div>
           </div>
         </a>
       </div>
-      <div class="col-3 mb-3">
-        <a
-          class=" lnk-rel"
-          href="https://via.placeholder.com/600/92c952"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="card" style="width: 18rem">
-            <div class="d-flex box-img align-items-center">
-              <div class="col-12">
-                <i class="fas fa-image fa-3x"></i>
-              </div>
-            </div>
-            <div class="card-body" style="height: 80px">
-              <p class="card-text">
-                accusamus beatae ad facilis cum similique qui sunt
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-3 mb-3">
-        <a
-          class=" lnk-rel"
-          href="https://via.placeholder.com/600/92c952"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="card" style="width: 18rem">
-            <div class="d-flex box-img align-items-center">
-              <div class="col-12">
-                <i class="fas fa-image fa-3x"></i>
-              </div>
-            </div>
-            <div class="card-body" style="height: 80px">
-              <p class="card-text">
-                accusamus beatae ad facilis cum similique qui sunt
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-3 mb-3">
-        <a
-          class=" lnk-rel"
-          href="https://via.placeholder.com/600/92c952"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="card" style="width: 18rem">
-            <div class="d-flex box-img align-items-center">
-              <div class="col-12">
-                <i class="fas fa-image fa-3x"></i>
-              </div>
-            </div>
-            <div class="card-body" style="height: 80px">
-              <p class="card-text">
-                accusamus beatae ad facilis cum similique qui sunt
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-3 mb-3">
-        <a
-          class=" lnk-rel"
-          href="https://via.placeholder.com/600/92c952"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="card" style="width: 18rem">
-            <div class="d-flex box-img align-items-center">
-              <div class="col-12">
-                <i class="fas fa-image fa-3x"></i>
-              </div>
-            </div>
-            <div class="card-body" style="height: 80px">
-              <p class="card-text">
-                accusamus beatae ad facilis cum similique qui sunt
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
+     
     </div>
   </div>
 </template>
@@ -123,10 +40,50 @@
 export default {
   name: "PhotoView",
   data() {
-    return {};
+    return {
+        album:{},
+        photos:[]
+    };
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    getAlbumById(AlbumId){
+      fetch("https://jsonplaceholder.typicode.com/albums/"+AlbumId)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            this.album = response;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener albums" + error.message
+          );
+        });
+    },
+
+    getPhotoByAlbumId(AlbumId){
+      fetch("https://jsonplaceholder.typicode.com/photos?albumId="+AlbumId)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            this.photos = response;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener albums" + error.message
+          );
+        });
+    },
+  },
+  mounted() {
+    this.getAlbumById(this.$router.currentRoute.params.idAlbum);
+    this.getPhotoByAlbumId(this.$router.currentRoute.params.idAlbum);
+  },
 };
 </script>
       
