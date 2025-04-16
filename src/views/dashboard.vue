@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-12 text-center mt-4">
+      <div class="col-md-12 text-start mt-4">
         <span class="title-d">Dashboard</span>
       </div>
     </div>
