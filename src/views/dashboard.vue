@@ -12,7 +12,7 @@
           <div class="card-body">
             <span class="card-title">Users</span>
             <div class="col-12">
-              <span class="cont-card"> 32 </span>
+              <span class="cont-card"> {{ userConts }}</span>
             </div>
           </div>
         </div>
@@ -22,7 +22,7 @@
           <div class="card-body">
             <span class="card-title">Post</span>
             <div class="col-12">
-              <span class="cont-card"> 32 </span>
+              <span class="cont-card"> {{ postConts }} </span>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <div class="card-body">
             <span class="card-title">Albums</span>
             <div class="col-12">
-              <span class="cont-card"> 32 </span>
+              <span class="cont-card"> {{ albumsCont }} </span>
             </div>
           </div>
         </div>
@@ -47,13 +47,17 @@
           <div class="card-body">
             <v-data-table
               :headers="headers"
-              :items="desserts"
+              :items="users"
               :items-per-page="5"
               class="elevation-1"
             >
               <template v-slot:[`item.actions`]="{ item }">
-               <a href="javascript(0)" @click="edit(item)" class="me-2"><i class="fas fa-pen"></i></a>
-               <a href="javascript(0)" @click="edit(item)"><i class="fas fa-trash-alt"></i></a>
+                <a href="javascript(0)" @click="edit(item)" class="me-2"
+                  ><i class="fas fa-pen"></i
+                ></a>
+                <a href="javascript(0)" @click="edit(item)"
+                  ><i class="fas fa-trash-alt"></i
+                ></a>
               </template>
             </v-data-table>
           </div>
@@ -73,99 +77,79 @@ export default {
           text: "Id",
           align: "start",
           sortable: false,
-          value: "name",
+          value: "id",
         },
-        { text: "Name", value: "calories" },
-        { text: "Username", value: "fat" },
-        { text: "Email", value: "carbs" },
-        { text: "Company", value: "protein" },
+        { text: "Name", value: "name" },
+        { text: "Username", value: "username" },
+        { text: "Email", value: "email" },
+        { text: "Company", value: "company.name" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: 1,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: 7,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: 8,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: 16,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: 0,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: 2,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: 45,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: 22,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: 6,
-        },
-      ],
+      users: [],
+      userConts: 0,
+      postConts: 0,
+      albumsCont: 0,
     };
   },
-  methods: {},
-  mounted() {},
+  methods: {
+     getUsers() {
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.length > 0) {
+            this.userConts = response.length;
+            this.users = response;
+            console.log("users", this.users)
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener usuarios" + error.message
+          );
+        });
+    },
+
+    getPosts() {
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.length > 0) {
+            this.postConts = response.length;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener posts" + error.message
+          );
+        });
+    },
+
+    getAlbums() {
+      fetch("https://jsonplaceholder.typicode.com/albums")
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.length > 0) {
+            this.albumsCont = response.length;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener albums" + error.message
+          );
+        });
+    },
+  },
+  mounted() {
+    this.getUsers();
+    this.getPosts();
+    this.getAlbums();
+  },
 };
 </script>
   

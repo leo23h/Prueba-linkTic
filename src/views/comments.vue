@@ -84,7 +84,7 @@ export default {
 
 .txt-body{
     font-size: 14px;
-    fnt-weight: 400;
+    font-weight: 400;
     color: rgba(0, 0, 0, 0.722);
 }
 
