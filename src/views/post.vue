@@ -7,79 +7,25 @@
       </div>
       <div class="col-md-6 d-flex pe-4 pb-2">
         <span class="subtitle me-2">By: </span>
-        <span class="subtitle-b">Leonardo Herrera M.</span>
+        <span class="subtitle-b">{{ user.name }}</span>
       </div>
     </div>
     <!-- post list -->
     <div class="row mt-5">
-      <div class="col-3">
-        <a class="lk-card" href="javascript:void(0)">
-          <div class="card">
+      <div class="col-3" v-for="item in posts" :key="item.id">
+          <div class="card" style="height: 344px;">
             <div class="card-body">
-              <h5 class="card-title">magnam facilis autem</h5>
+              <h5 class="card-title">{{ item.title }}</h5>
               <p class="card-text">
-                dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis
-                quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut
-                sequi eos ea sed quas
+                {{ item.body }}
               </p>
               <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-more" @click="showMore(1)">Show more</a>
+                <a href="javascript:void(0);" class="btn btn-more" @click="showMore(item)">Show more</a>
               </div>
             </div>
           </div>
-        </a>
       </div>
-      <div class="col-3">
-        <a class="lk-card" href="javascript:void(0)">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">magnam facilis autem</h5>
-              <p class="card-text">
-                dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis
-                quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut
-                sequi eos ea sed quas
-              </p>
-              <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-more" >Show more</a>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-3">
-        <a class="lk-card" href="javascript:void(0)">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">magnam facilis autem</h5>
-              <p class="card-text">
-                dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis
-                quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut
-                sequi eos ea sed quas
-              </p>
-              <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-more" >Show more</a>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-3">
-        <a class="lk-card" href="javascript:void(0)">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">magnam facilis autem</h5>
-              <p class="card-text">
-                dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis
-                quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut
-                sequi eos ea sed quas
-              </p>
-              <div class="d-flex justify-content-end">
-                <a href="#" class="btn btn-more" >Show more</a>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
+    
     </div>
   </div>
 </template>
@@ -88,16 +34,58 @@
 export default {
   name: "PostView",
   data() {
-    return {};
+    return {
+        user:{},
+        posts:[]
+    };
   },
   methods: {
-   showMore(key){
-    console.log("key", key)
-    this.$router.push({ name: 'comments', params: {id: key} })
-   }
+   showMore(item){
+    console.log("key", item)
+    this.$router.push({ name: 'comments', params: {idPost: item.id} });
+   },
+
+   getUserById(userId) {
+      fetch("https://jsonplaceholder.typicode.com/users/"+userId)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            this.user = response;
+
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener usuarios" + error.message
+          );
+        });
+    },
+
+   getPostByUser(userId) {
+      fetch("https://jsonplaceholder.typicode.com/posts?userId="+userId)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.length > 0) {
+            this.posts = response;
+
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener usuarios" + error.message
+          );
+        });
+    },
 
   },
-  mounted() {},
+  mounted() {
+    this.getUserById(this.$router.currentRoute.params.idUser);
+    this.getPostByUser(this.$router.currentRoute.params.idUser);
+  },
 };
 </script>
     

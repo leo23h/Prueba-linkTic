@@ -149,7 +149,7 @@ export default {
     },
 
     viewPosts(item){
-        this.$router.push({ name: 'post', params: {id: item.id} });
+        this.$router.push({ name: 'post', params: {idUser: item.id} });
     }  
   },
   mounted() {

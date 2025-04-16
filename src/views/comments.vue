@@ -7,53 +7,30 @@
       <div class="col-md-6 d-flex pe-4 pb-2">
         <span class="subtitle me-2">Title post: </span>
         <span class="subtitle-b"
-          >sunt aut facere repellat provident occaecati excepturi optio
-          reprehenderit</span>
+          >{{ post.title }}</span>
       </div>
     </div>
     <div class="row">
       <div class="col-12 mt-3">
         <!-- repeat here -->
-        <div class="card mb-3">
+        <div class="card mb-3" v-for="item in comments" :key="item.id">
           <div class="card-body px-4">
             <div class="d-flex align-items-center mb-2">
                 <div class="img">
                     <i class="fas fa-user-circle fa-2x"></i>
                 </div>
                 <div class="col-11 text-start">
-                  <span class="user-e">Eliseo@gardner.biz</span> 
+                  <span class="user-e">{{ item.email }}</span> 
                 </div>
             </div>
             <div class="row">
                  <div class="col-12 text-start pb-0">
-                    <span class="txt-name-t">id labore ex et quam laborum</span>
+                    <span class="txt-name-t">{{ item.name }}</span>
                  </div>
             </div>
             <div class="row">
                  <div class="col-12 text-start pt-1">
-                    <span class="txt-body">laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium</span>
-                 </div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body px-4">
-            <div class="d-flex align-items-center mb-2">
-                <div class="img">
-                    <i class="fas fa-user-circle fa-2x"></i>
-                </div>
-                <div class="col-11 text-start">
-                  <span class="user-e">Eliseo@gardner.biz</span> 
-                </div>
-            </div>
-            <div class="row">
-                 <div class="col-12 text-start pb-0">
-                    <span class="txt-name-t">id labore ex et quam laborum</span>
-                 </div>
-            </div>
-            <div class="row">
-                 <div class="col-12 text-start pt-1">
-                    <span class="txt-body">laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium</span>
+                    <span class="txt-body">{{ item.body }}</span>
                  </div>
             </div>
           </div>
@@ -67,10 +44,51 @@
 export default {
   name: "CommentsView",
   data() {
-    return {};
+    return {
+        post:{},
+        comments:[]
+    };
   },
-  methods: {},
-  mounted() {},
+  methods: {
+    getPostById(postId) {
+      fetch("https://jsonplaceholder.typicode.com/posts/"+postId)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            this.post = response;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener post" + error.message
+          );
+        });
+    },
+
+    getCommentsByPostId(postId) {
+      fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            this.comments = response;
+          } else {
+            console.log("Respuesta de red OK pero respuesta HTTP no OK");
+          }
+        })
+        .catch(function (error) {
+          console.log(
+            "Hubo un problema para obtener post" + error.message
+          );
+        });
+    },
+    
+  },
+  mounted() {
+    this.getPostById(this.$router.currentRoute.params.idPost);
+    this.getCommentsByPostId(this.$router.currentRoute.params.idPost);
+  },
 };
 </script>
     

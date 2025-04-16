@@ -7,10 +7,10 @@ import CommentsView from "@/views/comments.vue";
 import PhotoView from "@/views/photo.vue";
 
 const routes = [
-  { path: '/', component: dashboardView },
-  { path: '/post/:id', name:'post', component: PostView },
+  { path: '/', name: 'home', component: dashboardView },
+  { path: '/post/:idUser', name:'post', component: PostView },
   { path: '/album/:idUser/', name:'album', component: AlbumsView },
-  { path: '/comments/:id', name:'comments', component: CommentsView },
+  { path: '/comments/:idPost', name:'comments', component: CommentsView },
   { path: '/photo/:idAlbum', name:'photo', component: PhotoView }
 ];
 

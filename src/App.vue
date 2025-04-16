@@ -2,8 +2,10 @@
   <div id="app">
     <div class="row bg-blue justify-content-center">
       <div class="col-md-6 text-start mt-2 pb-2 ">
-          <img class="img-logo ps-3" src="@/assets/linkTic_logo.jpeg" alt="logo">
+          <a class="lnk-rel" href="javascript:void(0)" @click="redirectDashboard()">
+            <img class="img-logo ps-3" src="@/assets/linkTic_logo.jpeg" alt="logo">
           <span class="title ms-3 ">Prueba Técnica LinkTic</span>
+          </a>
       </div>
       <div class="col-md-6 d-flex align-items-center justify-content-end pe-4 mt-2 pb-2">
           <span class="n-title me-2">Presentado por:</span>
@@ -19,7 +21,15 @@
 export default {
   name: 'App',
   components: {
+  },
+
+  methods:{
+    redirectDashboard(){
+      const path = `/`;
+      if (this.$route.path !== path) this.$router.push(path)
+    }
   }
+
 }
 </script>
 <style>
@@ -53,6 +63,10 @@ export default {
 
 .bg-blue{
   background-color: #009efc;
+}
+
+.lnk-rel{
+  text-decoration: none;
 }
 
 

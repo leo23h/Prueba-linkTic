@@ -23,7 +23,7 @@
                 <i class="fas fa-image fa-3x"></i>
               </div>
             </div>
-            <div class="card-body" style="height: 80px">
+            <div class="card-body" style="height: 90px">
               <p class="card-text">
                 {{ item.title }}
               </p>
