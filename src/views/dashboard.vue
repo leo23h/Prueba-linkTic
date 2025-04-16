@@ -52,12 +52,11 @@
               class="elevation-1"
             >
               <template v-slot:[`item.actions`]="{ item }">
-                <a href="javascript(0)" @click="edit(item)" class="me-2"
-                  ><i class="fas fa-pen"></i
-                ></a>
-                <a href="javascript(0)" @click="edit(item)"
-                  ><i class="fas fa-trash-alt"></i
-                ></a>
+                <a href="javascript:void(0);" @click="viewAlbums(item)" class="me-2" title="View Albums">
+                    <i class="far fa-images fa-2x"></i>
+                </a>
+                <a href="javascript:void(0);" @click="viewPosts(item)" title="View Posts"
+                  ><i class="fas fa-mail-bulk fa-2x"></i></a>
               </template>
             </v-data-table>
           </div>
@@ -99,7 +98,6 @@ export default {
           if (response.length > 0) {
             this.userConts = response.length;
             this.users = response;
-            console.log("users", this.users)
           } else {
             console.log("Respuesta de red OK pero respuesta HTTP no OK");
           }
@@ -144,6 +142,15 @@ export default {
           );
         });
     },
+
+    viewAlbums(item){
+        console.log("user id dashboard", item)
+        this.$router.push({ name: 'album', params: {idUser: item.id} });
+    },
+
+    viewPosts(item){
+        this.$router.push({ name: 'post', params: {id: item.id} });
+    }  
   },
   mounted() {
     this.getUsers();
