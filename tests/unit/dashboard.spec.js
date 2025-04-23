@@ -1,4 +1,3 @@
-// FILE: src/views/test_dashboard.vue
 import { shallowMount } from "@vue/test-utils";
 import DashboardMain from "@/views/dashboard.vue";
 
